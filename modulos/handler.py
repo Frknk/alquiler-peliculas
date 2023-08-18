@@ -1,17 +1,12 @@
 """
 
 Sistema de Manejo de Archivos
-TXT
+YML - YAML Ain't Markup Language
 
 @Frknk
 """
 
 import os
-import shutil
-import time
-import datetime
-import sys
-import re
 
 from modulos import pelicula
 
@@ -43,11 +38,9 @@ class Handler:
         Ingresar pelicula a la base de datos
 
         -> data
-            -> peliculas
+            -> peliculas x  
                 -> id.txt
         """
-
-        # 
 
         if not os.path.exists('data/peliculas/' + Pelicula.id + '.txt'):
             archivo = open('data/peliculas/' + Pelicula.id + '.txt', 'w')
