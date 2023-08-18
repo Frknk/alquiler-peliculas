@@ -1,70 +1,107 @@
 """
 
 Sistema de Manejo de Archivos
-YML - YAML Ain't Markup Language a
+YML - YAML Ain't Markup Language
 
 @Frknk
 """
 
 import os
+import yaml
 
-from modulos import pelicula
+import pelicula
 
 class Handler:
 
-    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-
-    def crear_data_folders(self):
-
-        """
-        Crear folder de datos si no existe
-
-        -> data
-            -> peliculas
-            -> usuarios
-            -> encargados
-        """
-
-        if not os.path.exists('data'):
-            os.makedirs('data')
-            os.makedirs('data/peliculas')
-            os.makedirs('data/usuarios')
-            os.makedirs('data/encargados')
+    def __init__(self):
+        self.root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) # Obtener directorio raiz
 
     
+
+    def crear_data(self):
+
+        """
+        Crear folder data
+        Crear peliculas_data.yml, usuarios_data.yml y encargados_data.yml
+
+        -> data
+            -> peliculas_data.yml
+            -> usuarios_data.yml
+            -> encargados_data.yml
+        """
+
+        # Si el folder data no existe, crearlo
+        if not os.path.exists(os.path.join(self.root_dir, 'data')):
+            os.mkdir(os.path.join(self.root_dir, 'data'))
+        # Si el archivo peliculas_data.yml no existe, crearlo
+        if not os.path.exists(os.path.join(self.root_dir, 'data', 'peliculas_data.yml')):
+            with open(os.path.join(self.root_dir, 'data', 'peliculas_data.yml'), 'w') as archivo:
+                archivo.write('peliculas:')
+        # Si el archivo usuarios_data.yml no existe, crearlo
+        if not os.path.exists(os.path.join(self.root_dir, 'data', 'usuarios_data.yml')):
+            with open(os.path.join(self.root_dir, 'data', 'usuarios_data.yml'), 'w') as archivo:
+                archivo.write('usuarios:')
+        # Si el archivo encargados_data.yml no existe, crearlo
+        if not os.path.exists(os.path.join(self.root_dir, 'data', 'encargados_data.yml')):
+            with open(os.path.join(self.root_dir, 'data', 'encargados_data.yml'), 'w') as archivo:
+                archivo.write('encargados:')
+
     def ingresar_pelicula(self, Pelicula):
         
         """
-        Ingresar pelicula a la base de datos
+        Ingresar pelicula al archivo peliculas_data.yml
 
         -> data
-            -> peliculas x  
-                -> id.txt
+            -> peliculas_data.yml
+                -> pelicula_id
+                    -> nombre
+                    -> genero
+                    -> duracion
+                    -> clasificacion
+                    -> idioma
+                    -> subtitulos
+                    -> sinopsis
+                    -> director
+                    -> actores
+                    -> productora
+                    -> pais
+                    -> anio
         """
 
-        if not os.path.exists('data/peliculas/' + Pelicula.id + '.txt'):
-            archivo = open('data/peliculas/' + Pelicula.id + '.txt', 'w')
-            archivo.write(Pelicula.id + '\n')
-            archivo.write(Pelicula.nombre + '\n')
-            archivo.write(Pelicula.genero + '\n')
-            archivo.write(Pelicula.duracion + '\n')
-            archivo.write(Pelicula.clasificacion + '\n')
-            archivo.write(Pelicula.idioma + '\n')
-            archivo.write(Pelicula.subtitulos + '\n')
-            archivo.write(Pelicula.sinopsis + '\n')
-            archivo.write(Pelicula.director + '\n')
-            archivo.write(Pelicula.actores + '\n')
-            archivo.write(Pelicula.productora + '\n')
-            archivo.write(Pelicula.pais + '\n')
-            archivo.write(Pelicula.anio + '\n')
-            archivo.close()
-            return True
-        else:
-            return False
-        
+        # Crear pelicula_id
+        pelicula_id = Pelicula.nombre.lower().replace(' ', '_') # Reeemplazar espacios por guiones bajos
+        # Crear diccionario de pelicula
+        pelicula_dict = {
+            pelicula_id: {
+                'nombre': Pelicula.nombre,
+                'genero': Pelicula.genero,
+                'duracion': Pelicula.duracion,
+                'clasificacion': Pelicula.clasificacion,
+                'idioma': Pelicula.idioma,
+                'subtitulos': Pelicula.subtitulos,
+                'sinopsis': Pelicula.sinopsis,
+                'director': Pelicula.director,
+                'actores': Pelicula.actores,
+                'productora': Pelicula.productora,
+                'pais': Pelicula.pais,
+                'anio': Pelicula.anio
+            }
+        }
+        # Abrir peliculas_data.yml
+        with open(os.path.join(self.root_dir, 'data', 'peliculas_data.yml'), 'r') as archivo:
+            # Cargar peliculas_data.yml
+            peliculas_data = yaml.safe_load(archivo)
+            if peliculas_data['peliculas'] is None:
+                peliculas_data['peliculas'] = {}
+        # Agregar pelicula_dict a peliculas_data
+        peliculas_data['peliculas'].update(pelicula_dict)
+        # Abrir peliculas_data.yml
+        with open(os.path.join(self.root_dir, 'data', 'peliculas_data.yml'), 'w') as archivo:
+            # Guardar peliculas_data.yml
+            yaml.dump(peliculas_data, archivo)
 
 if __name__ == '__main__':
     handler = Handler()
-    handler.crear_data_folders()
+    handler.crear_data()
     pelicula = pelicula.Pelicula('nombre', 'genero', 'duracion', 'clasificacion', 'idioma', 'subtitulos', 'sinopsis', 'director', 'actores', 'productora', 'pais', 'anio')
     handler.ingresar_pelicula(pelicula)

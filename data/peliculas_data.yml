@@ -1,0 +1,14 @@
+peliculas:
+  nombre:
+    actores: actores
+    anio: anio
+    clasificacion: clasificacion
+    director: director
+    duracion: duracion
+    genero: genero
+    idioma: idioma
+    nombre: nombre
+    pais: pais
+    productora: productora
+    sinopsis: sinopsis
+    subtitulos: subtitulos
