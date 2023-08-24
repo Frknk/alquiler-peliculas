@@ -16,7 +16,6 @@ class Handler:
     def __init__(self):
         self.root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) # Obtener directorio raiz
 
-    
 
     def crear_data(self):
 
@@ -37,10 +36,11 @@ class Handler:
         if not os.path.exists(os.path.join(self.root_dir, 'data', 'peliculas_data.yml')):
             with open(os.path.join(self.root_dir, 'data', 'peliculas_data.yml'), 'w') as archivo:
                 archivo.write('peliculas:')
+
         # Si el archivo usuarios_data.yml no existe, crearlo
         if not os.path.exists(os.path.join(self.root_dir, 'data', 'usuarios_data.yml')):
             with open(os.path.join(self.root_dir, 'data', 'usuarios_data.yml'), 'w') as archivo:
-                archivo.write('usuarios:')
+                archivo.write('usuarios:') 
         # Si el archivo encargados_data.yml no existe, crearlo
         if not os.path.exists(os.path.join(self.root_dir, 'data', 'encargados_data.yml')):
             with open(os.path.join(self.root_dir, 'data', 'encargados_data.yml'), 'w') as archivo:
@@ -69,7 +69,7 @@ class Handler:
         """
 
         # Crear pelicula_id
-        pelicula_id = Pelicula.nombre.lower().replace(' ', '_') # Reeemplazar espacios por guiones bajos
+        pelicula_id = Pelicula.id
         # Crear diccionario de pelicula
         pelicula_dict = {
             pelicula_id: {
@@ -100,8 +100,49 @@ class Handler:
             # Guardar peliculas_data.yml
             yaml.dump(peliculas_data, archivo)
 
+    def eliminar_pelicula(self, pelicula_id):
+            
+            """
+            Eliminar pelicula del archivo peliculas_data.yml
+    
+            -> data
+                -> peliculas_data.yml 
+                    -> pelicula_id  (X)
+                        -> nombre
+                        -> genero
+                        -> duracion
+                        -> clasificacion
+                        -> idioma
+                        -> subtitulos
+                        -> sinopsis
+                        -> director
+                        -> actores
+                        -> productora
+                        -> pais
+                        -> anio
+            """
+
+            # Abrir peliculas_data.yml
+            with open(os.path.join(self.root_dir, 'data', 'peliculas_data.yml'), 'r') as archivo:
+                # Cargar peliculas_data.yml
+                peliculas_data = yaml.safe_load(archivo)
+
+            # Verificar si pelicula_id existe en peliculas_data
+            if pelicula_id not in peliculas_data['peliculas']:
+                return
+        
+            # Eliminar pelicula_id de peliculas_data
+            peliculas_data['peliculas'].pop(pelicula_id)
+
+            # Abrir peliculas_data.yml
+            with open(os.path.join(self.root_dir, 'data', 'peliculas_data.yml'), 'w') as archivo:
+                # Guardar peliculas_data.yml
+                yaml.dump(peliculas_data, archivo)
+
+
 if __name__ == '__main__':
     handler = Handler()
     handler.crear_data()
     pelicula = pelicula.Pelicula('nombre', 'genero', 'duracion', 'clasificacion', 'idioma', 'subtitulos', 'sinopsis', 'director', 'actores', 'productora', 'pais', 'anio')
     handler.ingresar_pelicula(pelicula)
+    handler.eliminar_pelicula('211616')
