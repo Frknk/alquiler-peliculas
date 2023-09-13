@@ -1,50 +1,99 @@
-import persona
-import uuid
-import os
-import yaml
+"""
+@Frknk
 
-class Cliente(persona.Persona):
+Clases:
+    - Cliente
 
-    def __init__(self, nombre, apellido, dni, direccion, telefono, email):
-        super().__init__(nombre, apellido, dni, direccion, telefono, email)
-        self.id_cliente = self.crear_id_unica()
+Atributos:
+    None
 
-    def generar_id(self):
-        return str(uuid.uuid4().int)[:6]
-    
-    def crear_id_unica(self):
+Funciones:
+    - Cliente() : Constructor de la clase Cliente.
+"""
 
-        """ 
-        Checar si el id ya existe
-        Si existe, crear otro
-        Si no existe, retornar el id
+from modulos.persona import Persona
+from modulos.gestor_id import GestorID
+
+
+class Cliente(Persona):
+    """
+    Clase para manejar los clientes
+
+    ...
+
+    Atributos
+    ---------
+    id : str
+        id del cliente
+    password : str
+        password del cliente
+
+
+    """
+
+    def __init__(
+        self,
+        nombre: str,
+        apellido: str,
+        dni: str,
+        direccion: str,
+        telefono: str,
+        email: str,
+        password: str,
+    ):
         """
+        Constructor de la clase Cliente
 
-        # Variable que contiene la ruta del archivo
-        data_file = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')), 'data', 'usuarios_data.yml')
+        Parametros
+        ----------
+        nombre : str
+            nombre del cliente
+        apellido : str
+            apellido del cliente
+        dni : str
+            dni del cliente
+        direccion : str
+            direccion del cliente
+        telefono : str
+            telefono del cliente
+        email : str
+            email del cliente
+        password : str
+            password del cliente
+        """
+        super().__init__(nombre, apellido, dni, direccion, telefono, email)
+        self.id = GestorID.crear_id_unica("data/clientes_data.yml")
+        self.password = password
 
-        if not os.path.exists(data_file): # Si no existe el archivo 
-            pass
+    def getid(self) -> str:
+        """
+        Obtener el id del cliente
 
-        with open(data_file, 'r') as archivo: # Abrir el archivo
-            data = yaml.load(archivo, Loader=yaml.FullLoader) # Cargar el archivo
-    
-        try: 
-            while True: # Mientras no se encuentre un id unico
-                id = self.generar_id()
-                if id not in data['usuarios']:
-                    return id
-        except TypeError:
-            return self.generar_id() # Si no hay usuarios, retornar un id
+        Return
+        ------
+        str
+            id del cliente
+        """
+        return self.id
 
-if __name__ == '__main__':
+    def getpassword(self) -> str:
+        """
+        Obtener el password del cliente
 
-    cliente1 = Cliente("Juan", "Perez", "12345678", "Av. Siempreviva 123", "123456789", "")
-    
-    print(cliente1)
+        Return
+        ------
+        str
+            password del cliente
+        """
+        return self.password
 
-    cliente1.setNombre("Pedro")
+    def setpassword(self, password: str) -> None:
+        """
+        Asignar un password al cliente
 
-    print(cliente1)
-
-        
+        Parametros
+        ----------
+        password : str
+            password del cliente
+        """
+        self.password = password

@@ -258,7 +258,14 @@ class Persona:
         str
             Datos de la persona
         """
-        return f"{self.nombre} {self.apellido} {self.dni} {self.direccion} {self.telefono} {self.email}"
+        return f"""
+        Nombre:{self.nombre} 
+        Apellido:{self.apellido} 
+        Dni:{self.dni} 
+        Direccion:{self.direccion} 
+        Telefono:{self.telefono} 
+        Email:{self.email}
+        """
 
     def __str__(self) -> str:
         """

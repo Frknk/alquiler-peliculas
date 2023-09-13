@@ -12,7 +12,7 @@ Funciones:
       un id unico para la pelicula.
 
 """
-from gestor_id import GestorID
+from modulos.gestor_id import GestorID
 
 
 class Pelicula:
@@ -105,6 +105,8 @@ class Pelicula:
         Cambiar fecha de la pelicula
     getdata()
         Obtener datos de la pelicula
+    getdata_str()
+        Obtener datos de la pelicula en un string
     __str__()
         Obtener representacion en string de la pelicula
     """
@@ -154,7 +156,7 @@ class Pelicula:
         fecha : str
             fecha de estreno de la pelicula - formato: dd/mm/aaaa
         """
-        self.id = GestorID.crear_id_unica("../data/peliculas_data.yml")
+        self.id = GestorID.crear_id_unica("data/peliculas_datas.yml")
         self.nombre = nombre
         self.genero = genero
         self.duracion = duracion
@@ -453,6 +455,7 @@ class Pelicula:
             datos de la pelicula
         """
         return {
+            "id": self.id,
             "nombre": self.nombre,
             "genero": self.genero,
             "duracion": self.duracion,
@@ -476,7 +479,8 @@ class Pelicula:
         str
             datos de la pelicula
         """
-        return f"""Pelicula: \n
+        return f"""Pelicula:
+        id: {self.id}
         nombre: {self.nombre}
         genero: {self.genero}
         duracion: {self.duracion}

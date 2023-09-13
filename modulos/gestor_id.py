@@ -36,14 +36,15 @@ class GestorID:
     """
 
     @staticmethod
-    def generar_id():
+    def generar_id() -> str:
         # Generar un id de 6 caracteres alfanumericos
+        # Preferible si no buscas crear un id unico
         return str(uuid.uuid4().int)[:6]
 
     @classmethod
-    def crear_id_unica(cls, data_file):
+    def crear_id_unica(cls, data_file) -> str:
         """
-        Checar si el id ya existe
+        Checar si el id ya existe en un archivo de datos
         Si existe, crear otro
         Si no existe, retornar el id
 
@@ -51,13 +52,18 @@ class GestorID:
         ----------
         data_file : str
             ruta del archivo de datos
-            formato: "data/peliculas_data.yml"
+            ejemplo: "data/peliculas_data.yml"
+
+        Return
+        ------
+        id_gen : str
+            id generado
         """
 
         # Verificar si data_file existe
-        if not os.path.exists(data_file):
-            data = {}
-            print(f"El archivo {data_file} no existe")
+        if not os.path.exists(os.getcwd() + "/" + data_file):  # Obtener directorio actual
+            print(f"El archivo {data_file} no existe en {os.getcwd()}")
+            return "NULL ID"
         else:
             with open(data_file, "r") as archivo:
                 data = yaml.load(archivo, Loader=yaml.FullLoader)
@@ -66,16 +72,13 @@ class GestorID:
         if not isinstance(data, dict):
             data = {}
 
-        # Generar id unica
+        # Loop para generar id unica
         try:
             while True:
+                # Generar id
                 id_gen = cls.generar_id()
+                # Verificar si id_gen ya existe en data
                 if id_gen not in data:
                     return id_gen
         except Exception as e:
             print(f"A ocurrido un error al generar la id: {e}")
-
-
-if __name__ == "__main__":
-    asd = GestorID.crear_id_unica("test.yml")
-    print(asd)
