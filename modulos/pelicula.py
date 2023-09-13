@@ -467,17 +467,16 @@ class Pelicula:
             "fecha": self.fecha,
         }
 
-    def __str__(self) -> str:
+    def getdata_str(self) -> str:
         """
-        Obtener representacion en string de la pelicula
+        Obtener datos de la pelicula en un string
 
         Return
         ------
         str
-            representacion en string de la pelicula
+            datos de la pelicula
         """
         return f"""Pelicula: \n
-        id: {self.id} 
         nombre: {self.nombre}
         genero: {self.genero}
         duracion: {self.duracion}
@@ -491,3 +490,14 @@ class Pelicula:
         pais: {self.pais}
         fecha: {self.fecha}
         """
+
+    def __str__(self) -> str:
+        """
+        Obtener representacion en string de la pelicula
+
+        Return
+        ------
+        str
+            representacion en string de la pelicula
+        """
+        return self.getdata_str()
