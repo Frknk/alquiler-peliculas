@@ -37,8 +37,19 @@ class GestorID:
 
     @staticmethod
     def generar_id() -> str:
-        # Generar un id de 6 caracteres alfanumericos
-        # Preferible si no buscas crear un id unico
+        """
+        Genera un identificador unico de 6 caracteres alfanumericos usando uuid4.
+        Preferible si no quieres guardar el id en un archivo de datos.
+
+        Parametros
+        ----------
+        None
+
+        Return
+        ------
+        str
+            id generado
+        """
         return str(uuid.uuid4().int)[:6]
 
     @classmethod
@@ -57,12 +68,13 @@ class GestorID:
         Return
         ------
         id_gen : str
-            id generado
+            id generado - En caso de fallo retorna "NULL ID"
         """
 
         # Verificar si data_file existe
         if not os.path.exists(os.getcwd() + "/" + data_file):  # Obtener directorio actual
             print(f"El archivo {data_file} no existe en {os.getcwd()}")
+            print(f"Ruta {os.getcwd()}/{data_file}")
             return "NULL ID"
         else:
             with open(data_file, "r") as archivo:

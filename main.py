@@ -1,6 +1,10 @@
 from modulos.pelicula import Pelicula
 from modulos.cliente import Cliente
-import os
+import rich
+from rich import box
+from rich.columns import Columns
+from rich.panel import Panel
+from rich.table import Table
 
 pelicula = Pelicula(
     nombre="El señor de los anillos",
@@ -28,9 +32,32 @@ cliente = Cliente(
 )
 
 
-print(pelicula.getdata_str())
-print(os.getcwd())
-my_string = "This is a backslash: \\"
-print(my_string)
-print(cliente.getdata_str())
-print(cliente.getdata())
+def generar_tabla_rich(objeto):
+    tabla = Table(show_edge=True, show_header=False, box=box.MINIMAL)
+    for key, value in objeto.__dict__.items():
+        if key != 'nombre':
+            tabla.add_row(f"[magenta bold] {key.capitalize()}", value)
+    return Columns([Panel(tabla, title=objeto.nombre)], equal=True)
+
+
+# Mostrar datos de pelicula
+table = Table(show_edge=True, show_header=False, box=box.MINIMAL)
+table.add_row("[magenta bold] Genero", pelicula.genero)
+table.add_row("[magenta bold] Duracion", pelicula.duracion)
+table.add_row("[magenta bold] Clasificacion", pelicula.clasificacion)
+table.add_row("[magenta bold] Idioma", pelicula.idioma)
+table.add_row("[magenta bold] Subtitulos", pelicula.subtitulos)
+table.add_row("[magenta bold] Sinopsis", pelicula.sinopsis)
+table.add_row("[magenta bold] Director", pelicula.director)
+table.add_row("[magenta bold] Actores", pelicula.actores)
+table.add_row("[magenta bold] Productora", pelicula.productora)
+table.add_row("[magenta bold] Pais", pelicula.pais)
+table.add_row("[magenta bold] Fecha", pelicula.fecha)
+
+rconsole = rich.get_console()
+rconsole.print(
+    Columns([Panel(table, title=pelicula.nombre)], equal=True), justify="center"
+)
+
+tabla_test = generar_tabla_rich(cliente)
+rconsole.print(tabla_test, justify="center")

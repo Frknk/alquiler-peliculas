@@ -156,7 +156,7 @@ class Pelicula:
         fecha : str
             fecha de estreno de la pelicula - formato: dd/mm/aaaa
         """
-        self.id = GestorID.crear_id_unica("data/peliculas_datas.yml")
+        self.id = GestorID.crear_id_unica("data/peliculas_data.yml")
         self.nombre = nombre
         self.genero = genero
         self.duracion = duracion
