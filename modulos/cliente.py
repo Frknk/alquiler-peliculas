@@ -12,7 +12,7 @@ Funciones:
 """
 
 from modulos.persona import Persona
-from modulos.gestor_id import GestorID
+from modulos.gestor import Gestor
 
 
 class Cliente(Persona):
@@ -62,7 +62,7 @@ class Cliente(Persona):
             password del cliente
         """
         super().__init__(nombre, apellido, dni, direccion, telefono, email)
-        self.id = GestorID.crear_id_unica("data/clientes_data.yml")
+        self.id = Gestor.crear_id_unica("data/clientes_data.yml")
         self.password = password
 
     def getid(self) -> str:
