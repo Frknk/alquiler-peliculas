@@ -12,7 +12,7 @@ Funciones:
       un id unico para la pelicula.
 
 """
-from modulos.gestor_id import GestorID
+from modulos.gestor import Gestor
 
 
 class Pelicula:
@@ -50,6 +50,8 @@ class Pelicula:
         pais origen de la pelicula
     fecha : str
         fecha de estreno de la pelicula - formato: dd/mm/aaaa
+    precio : float
+        precio de la pelicula
 
     Metodos
     -------
@@ -79,6 +81,8 @@ class Pelicula:
         Obtener pais de la pelicula
     getfecha()
         Obtener fecha de la pelicula
+    getprecio()
+        Obtener precio de la pelicula
     setnombre(nombre)
         Cambiar nombre de la pelicula
     setgenero(genero)
@@ -103,6 +107,8 @@ class Pelicula:
         Cambiar pais de la pelicula
     setfecha(fecha)
         Cambiar fecha de la pelicula
+    setprecio(precio)
+        Cambiar precio de la pelicula
     getdata()
         Obtener datos de la pelicula
     getdata_str()
@@ -125,6 +131,7 @@ class Pelicula:
         productora: str,
         pais: str,
         fecha: str,
+        precio: float
     ):
         """
         Constructor de la clase Pelicula
@@ -155,8 +162,10 @@ class Pelicula:
             pais origen de la pelicula
         fecha : str
             fecha de estreno de la pelicula - formato: dd/mm/aaaa
+        precio : float
+            precio de la pelicula
         """
-        self.id = GestorID.crear_id_unica("data/peliculas_data.yml")
+        self.id = Gestor.crear_id_unica("data/peliculas_data.yml")
         self.nombre = nombre
         self.genero = genero
         self.duracion = duracion
@@ -169,6 +178,7 @@ class Pelicula:
         self.productora = productora
         self.pais = pais
         self.fecha = fecha
+        self.precio = precio
 
     def getid(self) -> str:
         """
@@ -313,6 +323,17 @@ class Pelicula:
         """
         return self.fecha
 
+    def getprecio(self) -> float:
+        """
+        Obtener precio de la pelicula
+
+        Return
+        ------
+        precio : float
+            precio de la pelicula
+        """
+        return self.precio
+
     def setnombre(self, nombre: str):
         """
         Cambiar nombre de la pelicula
@@ -445,6 +466,17 @@ class Pelicula:
         """
         self.fecha = fecha
 
+    def setprecio(self, precio: float):
+        """
+        Cambiar precio de la pelicula
+
+        Parametros
+        ----------
+        precio : float
+            nuevo precio de la pelicula
+        """
+        self.precio = precio
+
     def getdata(self) -> dict:
         """
         Obtener datos de la pelicula
@@ -454,8 +486,7 @@ class Pelicula:
         dict
             datos de la pelicula
         """
-        return {
-            "id": self.id,
+        pelicula_info = {
             "nombre": self.nombre,
             "genero": self.genero,
             "duracion": self.duracion,
@@ -469,6 +500,7 @@ class Pelicula:
             "pais": self.pais,
             "fecha": self.fecha,
         }
+        return {self.id: pelicula_info}
 
     def getdata_str(self) -> str:
         """
