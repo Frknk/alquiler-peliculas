@@ -2,7 +2,7 @@
 @Frknk
 
 Clases:
-    - GestorID
+    - Gestor
 
 Atributos:
     - None
