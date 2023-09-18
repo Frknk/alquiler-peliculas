@@ -8,7 +8,7 @@ Atributos:
     - None
 
 Funciones:
-    - Gestor() : Constructor de la clase GestorID.
+    - Gestor() : Constructor de la clase Gestor.
 """
 import os
 import uuid
