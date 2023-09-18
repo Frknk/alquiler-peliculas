@@ -18,7 +18,8 @@ import yaml
 
 class Gestor:
     """
-    Clase para manejar los identificadores unicos
+    Clase para manejar los identificadores unicos,
+    a si mismo como los archivos de datos
 
     ...
 
