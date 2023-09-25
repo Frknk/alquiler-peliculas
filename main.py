@@ -29,10 +29,11 @@ def generar_tabla_rich_dict(diccionario: dict, objeto_id: str):
 
 
 # Recuperar data usando gestor
-peliculas_dict = Gestor.recuperar_data("data/peliculas_data.yml") # Diccionario
-clientes_dict = Gestor.recuperar_data("data/clientes_data.yml") # Diccionario
+peliculas_dict = Gestor.recuperar_data("data/peliculas_data.yml")  # Diccionario
+clientes_dict = Gestor.recuperar_data("data/clientes_data.yml")  # Diccionario
 
-r_console = rich.get_console() # Libreria de consola
+r_console = rich.get_console()  # Libreria de consola
+
 
 def devolver_pelicula(cliente: Cliente):
     r_console.clear()
@@ -83,7 +84,6 @@ def alquilar_pelicula(cliente: Cliente):
             rich.print(generar_tabla_rich_dict(pelicula_data, pelicula_id))
     pelicula_id = r_console.input("[yellow] Seleccione Pelicula (ID): ")
     peliculaa = Gestor.recuperar_data("data/peliculas_data.yml")[pelicula_id]
-    clientee = Gestor.recuperar_data("data/clientes_data.yml")[cliente.id]
     if peliculaa["disponible"]:
         cliente.agregar_pelicula_alquilada(pelicula_id)
         print(cliente.getclientedata())
