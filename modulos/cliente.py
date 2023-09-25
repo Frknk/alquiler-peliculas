@@ -27,6 +27,8 @@ class Cliente(Persona):
         id del cliente
     password : str
         password del cliente
+    peliculas_alquiladas : list
+        lista de peliculas alquiladas por el cliente
 
 
     """
@@ -64,6 +66,18 @@ class Cliente(Persona):
         super().__init__(nombre, apellido, dni, direccion, telefono, email)
         self.id = Gestor.crear_id_unica("data/clientes_data.yml")
         self.password = password
+        self.peliculas_alquiladas = []
+
+    def agregar_pelicula_alquilada(self, pelicula_id: str) -> None:
+        """
+        Agregar una pelicula a la lista de peliculas alquiladas
+
+        Parametros
+        ----------
+        pelicula_id : str
+            id de la pelicula a agregar
+        """
+        self.peliculas_alquiladas.append(pelicula_id)
 
     def getid(self) -> str:
         """
@@ -76,6 +90,12 @@ class Cliente(Persona):
         """
         return self.id
 
+    def setid(self, id: str) -> None:
+        """
+        Asignar un id al cliente
+        """
+        self.id = id
+
     def getpassword(self) -> str:
         """
         Obtener el password del cliente
@@ -87,6 +107,17 @@ class Cliente(Persona):
         """
         return self.password
 
+    def getpelisalquiladas(self) -> list:
+        """
+        Obtener la lista de peliculas alquiladas por el cliente
+
+        Return
+        ------
+        list
+            lista de peliculas alquiladas por el cliente
+        """
+        return self.peliculas_alquiladas
+
     def setpassword(self, password: str) -> None:
         """
         Asignar un password al cliente
@@ -97,3 +128,45 @@ class Cliente(Persona):
             password del cliente
         """
         self.password = password
+
+    def getclientedatasimple(self) -> dict:
+        """
+        Obtener los datos del cliente en un diccionario
+
+        Return
+        ------
+        dict
+            datos del cliente en un diccionario
+        """
+        cliente_info = {
+            "nombre": self.nombre,
+            "apellido": self.apellido,
+            "dni": self.dni,
+            "direccion": self.direccion,
+            "telefono": self.telefono,
+            "email": self.email,
+            "password": self.password,
+        }
+        return cliente_info
+
+    def getclientedata(self) -> dict:
+        """
+        Obtener los datos del cliente en un diccionario
+
+        Return
+        ------
+        dict
+            datos del cliente en un diccionario
+        """
+    
+        cliente_info = {
+                "nombre": self.nombre,
+                "apellido": self.apellido,
+                "dni": self.dni,
+                "direccion": self.direccion,
+                "telefono": self.telefono,
+                "email": self.email,
+                "password": self.password,
+                "peliculas_alquiladas": self.peliculas_alquiladas,
+            }
+        return {self.id: cliente_info}

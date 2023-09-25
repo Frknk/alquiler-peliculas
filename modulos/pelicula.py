@@ -131,7 +131,8 @@ class Pelicula:
         productora: str,
         pais: str,
         fecha: str,
-        precio: float
+        precio: float,
+        disponible: bool = True,
     ):
         """
         Constructor de la clase Pelicula
@@ -179,6 +180,7 @@ class Pelicula:
         self.pais = pais
         self.fecha = fecha
         self.precio = precio
+        self.disponible = disponible
 
     def getid(self) -> str:
         """
@@ -477,6 +479,28 @@ class Pelicula:
         """
         self.precio = precio
 
+    def setdisponible(self, disponible: bool):
+        """
+        Cambiar disponibilidad de la pelicula
+
+        Parametros
+        ----------
+        disponible : bool
+            nueva disponibilidad de la pelicula
+        """
+        self.disponible = disponible
+
+    def setid(self, id: str):
+        """
+        Cambiar id de la pelicula
+
+        Parametros
+        ----------
+        id : str
+            nuevo id de la pelicula
+        """
+        self.id = id
+
     def getdata(self) -> dict:
         """
         Obtener datos de la pelicula
@@ -499,6 +523,8 @@ class Pelicula:
             "productora": self.productora,
             "pais": self.pais,
             "fecha": self.fecha,
+            "precio": self.precio,
+            "disponible": self.disponible
         }
         return {self.id: pelicula_info}
 
@@ -525,6 +551,8 @@ class Pelicula:
         productora: {self.productora}
         pais: {self.pais}
         fecha: {self.fecha}
+        precio: {self.precio}
+        disponible: {self.disponible}
         """
 
     def __str__(self) -> str:
