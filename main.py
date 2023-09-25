@@ -29,11 +29,10 @@ def generar_tabla_rich_dict(diccionario: dict, objeto_id: str):
 
 
 # Recuperar data usando gestor
-peliculas_dict = Gestor.recuperar_data("data/peliculas_data.yml")
-clientes_dict = Gestor.recuperar_data("data/clientes_data.yml")
+peliculas_dict = Gestor.recuperar_data("data/peliculas_data.yml") # Diccionario
+clientes_dict = Gestor.recuperar_data("data/clientes_data.yml") # Diccionario
 
-r_console = rich.get_console()
-
+r_console = rich.get_console() # Libreria de consola
 
 def devolver_pelicula(cliente: Cliente):
     r_console.clear()
@@ -85,9 +84,6 @@ def alquilar_pelicula(cliente: Cliente):
     pelicula_id = r_console.input("[yellow] Seleccione Pelicula (ID): ")
     peliculaa = Gestor.recuperar_data("data/peliculas_data.yml")[pelicula_id]
     clientee = Gestor.recuperar_data("data/clientes_data.yml")[cliente.id]
-    print(clientee)
-    print("\n")
-    print(peliculaa)
     if peliculaa["disponible"]:
         cliente.agregar_pelicula_alquilada(pelicula_id)
         print(cliente.getclientedata())
@@ -101,6 +97,8 @@ def alquilar_pelicula(cliente: Cliente):
         Gestor.guardar_data("data/peliculas_data.yml", peliculas_dict)
         Gestor.guardar_data("data/clientes_data.yml", clientes_dict)
         rich.print("[bold green]Alquiler exitoso")
+        # Press Enter to continue
+        r_console.input("[red] Presione Enter para continuar...")
     else:
         rich.print("[bold red]La pelicula no esta disponible")
 
@@ -124,6 +122,7 @@ def iniciar_sesion():
     )
     r_console.print("[bold green]INICIO DE SESION", justify="center")
     cid = r_console.input("[bold yellow]Ingrese su ID: ")
+    
     if cid == "CREATE":
         pelicula = Pelicula(
             nombre="El señor de los anillos",
@@ -143,8 +142,8 @@ def iniciar_sesion():
         data = pelicula.getdata()
         Gestor.agregar_data("data/peliculas_data.yml", data)
         return
+    
     password = r_console.input("[bold yellow]Ingrese su password: ")
-
     cliente = GestorObjetos.recuperar_cliente(cid, "data/clientes_data.yml")
 
     if cliente:
@@ -213,10 +212,12 @@ def registrarse():
     rich.print("[bold]Ingrese su password:")
     password = input("Password: ")
     cliente = Cliente(nombre, apellido, dni, direccion, telefono, email, password)
-    print(cliente.getclientedata())
     cliente_data = cliente.getclientedata()
     Gestor.agregar_data("data/clientes_data.yml", cliente_data)
     rich.print("[bold green]Registro exitoso")
+    rich.print(generar_tabla_rich_dict(cliente.getclientedatasimple(), cliente.id))
+    # Press Enter to continue
+    r_console.input("[red] Presione Enter para continuar...")
 
 
 def main_menu():

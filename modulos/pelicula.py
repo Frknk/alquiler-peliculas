@@ -52,6 +52,8 @@ class Pelicula:
         fecha de estreno de la pelicula - formato: dd/mm/aaaa
     precio : float
         precio de la pelicula
+    disponible: bool
+        disponibilidad de la pelicula
 
     Metodos
     -------
@@ -165,6 +167,8 @@ class Pelicula:
             fecha de estreno de la pelicula - formato: dd/mm/aaaa
         precio : float
             precio de la pelicula
+        disponible: bool
+            disponibilidad de la pelicula
         """
         self.id = Gestor.crear_id_unica("data/peliculas_data.yml")
         self.nombre = nombre
