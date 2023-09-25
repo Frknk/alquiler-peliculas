@@ -41,6 +41,7 @@ class Gestor:
         Comprueba la existencia de un id en un archivo de datos. Si ya existe, genera otro id.
         Si no retorna el id generado.
     """
+
     @classmethod
     def agregar_data(cls, data_file, data) -> bool:
         """
@@ -92,7 +93,7 @@ class Gestor:
     @classmethod
     def guardar_data(cls, data_file, data) -> bool:
         """
-        Guardar datos en un archivo de datos
+        Sobreescribir datos en un archivo de datos
 
         Parametros
         ----------
@@ -122,9 +123,11 @@ class Gestor:
 
         # Guardar datos en archivo de datos
         with open(data_file, "w") as archivo:
+            # Sobre escribir datos en archivo de datos
             yaml.dump(data, archivo)
 
         return True
+
 
     @classmethod
     def recuperar_data(cls, data_file) -> dict:
