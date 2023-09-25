@@ -20,11 +20,11 @@ LOGO = r"""
 """
 
 
-def generar_tabla_rich_dict(diccionario: dict, id: str):
+def generar_tabla_rich_dict(diccionario: dict, objeto_id: str):
     tabla = Table(show_edge=True, show_header=False, box=box.MINIMAL)
     for key, value in diccionario.items():
         tabla.add_row(f"[magenta bold] {key.capitalize()}", str(value))
-    tabla = Columns([Panel(tabla, title=id)], equal=True)
+    tabla = Columns([Panel(tabla, title=objeto_id)], equal=True)
     return tabla
 
 
@@ -104,6 +104,7 @@ def alquilar_pelicula(cliente: Cliente):
     else:
         rich.print("[bold red]La pelicula no esta disponible")
 
+
 def ver_datos(cliente: Cliente):
 
     r_console.clear()
@@ -143,15 +144,8 @@ def iniciar_sesion():
         Gestor.agregar_data("data/peliculas_data.yml", data)
         return
     password = r_console.input("[bold yellow]Ingrese su password: ")
-    
-    try:
-        cliente = GestorObjetos.recuperar_cliente(cid, "data/clientes_data.yml")
 
-    except Exception as e:
-        r_console.print("[bold red]Ha ocurrido un error: ", e, justify="center")
-
-        # Press Enter to continue
-        r_console.input("[red] Presione Enter para continuar...")
+    cliente = GestorObjetos.recuperar_cliente(cid, "data/clientes_data.yml")
 
     if cliente:
         if cliente.password == password:
