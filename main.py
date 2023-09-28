@@ -63,14 +63,15 @@ def devolver_pelicula(cliente: Cliente):
 def ver_peliculas_alquiladas(cliente: Cliente):
     r_console.clear()
     r_console.print(LOGO, justify="center", style="bold red", markup=False)
-    rich.print("[bold]Peliculas alquiladas")
+    rich.print("[bold yellow]Peliculas alquiladas")
+
     for pelicula_id in cliente.peliculas_alquiladas:
         peliculas_dict_act = Gestor.recuperar_data("data/peliculas_data.yml")
         pelicula_data = peliculas_dict_act[pelicula_id]
         rich.print(generar_tabla_rich_dict(pelicula_data, pelicula_id))
 
-        # Press Enter to continue
-        r_console.input("[red] Presione Enter para continuar...")
+    # Press Enter to continue
+    r_console.input("[red] Presione Enter para continuar...")
 
 
 def alquilar_pelicula(cliente: Cliente):
@@ -82,16 +83,23 @@ def alquilar_pelicula(cliente: Cliente):
     for pelicula_id, pelicula_data in peliculas_dict.items():
         if pelicula_data["disponible"]:
             rich.print(generar_tabla_rich_dict(pelicula_data, pelicula_id))
+
     pelicula_id = r_console.input("[yellow] Seleccione Pelicula (ID): ")
-    peliculaa = Gestor.recuperar_data("data/peliculas_data.yml")[pelicula_id]
+
+    try:
+        peliculaa = Gestor.recuperar_data("data/peliculas_data.yml")[pelicula_id]
+    except KeyError:
+        r_console.print("[red] Ingrese un ID Valido")
+        r_console.input("[red] Presione Enter para continuar...")
+        return
+
     if peliculaa["disponible"]:
         cliente.agregar_pelicula_alquilada(pelicula_id)
-        print(cliente.getclientedata())
 
+        # Pelicula no disponible
         peliculas_dict[pelicula_id]["disponible"] = False
 
         # Update data en clientes dict
-        print(cliente.peliculas_alquiladas)
         clientes_dict[cliente.id]["peliculas_alquiladas"] = cliente.peliculas_alquiladas
 
         Gestor.guardar_data("data/peliculas_data.yml", peliculas_dict)
@@ -101,6 +109,7 @@ def alquilar_pelicula(cliente: Cliente):
         r_console.input("[red] Presione Enter para continuar...")
     else:
         rich.print("[bold red]La pelicula no esta disponible")
+        r_console.input("[red] Presione Enter para continuar...")
 
 
 def ver_datos(cliente: Cliente):
