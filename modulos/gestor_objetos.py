@@ -1,6 +1,7 @@
 from modulos.cliente import Cliente
 from modulos.gestor import Gestor
 from modulos.pelicula import Pelicula
+from datetime import datetime
 
 class GestorObjetos:
     """
@@ -15,6 +16,22 @@ class GestorObjetos:
     recuperar_cliente(cliente_id: str, data_file: str) -> Cliente:
         Recupera un cliente a partir de su id y el archivo de datos.
     """
+
+    @classmethod
+    def registro(cls, tipo: str, cliente_id: str, pelicula_id: str, data_file: str):
+        """
+        Registra un diccionario en un archivo de datos.
+        """
+
+        dict = {
+            "tipo": tipo,
+            "fecha": datetime.now().strftime("%d/%m/%Y"),
+            "hora": datetime.now().strftime("%H:%M:%S"),
+            "cliente_id": cliente_id,
+            "pelicula_id": pelicula_id,
+        }
+
+        Gestor.agregar_data(data_file, dict)
 
     @classmethod
     def recuperar_pelicula(cls, pelicula_id: str, data_file : str):

@@ -85,7 +85,7 @@ class Gestor:
         data_old.update(data)
 
         # Guardar datos en archivo de datos
-        with open(data_file, "w") as archivo:
+        with open(data_file, "a") as archivo:
             yaml.dump(data_old, archivo)
 
         return True

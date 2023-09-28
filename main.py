@@ -1,4 +1,5 @@
 import rich
+from datetime import datetime
 from rich import box
 from rich.columns import Columns
 from rich.panel import Panel
@@ -53,6 +54,7 @@ def devolver_pelicula(cliente: Cliente):
         clientes_dict[cliente.id]["peliculas_alquiladas"] = cliente.peliculas_alquiladas
         Gestor.guardar_data("data/peliculas_data.yml", peliculas_dict)
         Gestor.guardar_data("data/clientes_data.yml", clientes_dict)
+        GestorObjetos.registro("devolucion", cliente.id, pelicula_id, "data/alquiler_data.yml")
         rich.print("[bold green]Devolucion exitosa")
         # Press Enter to continue
         r_console.input("[red] Presione Enter para continuar...")
@@ -104,6 +106,9 @@ def alquilar_pelicula(cliente: Cliente):
 
         Gestor.guardar_data("data/peliculas_data.yml", peliculas_dict)
         Gestor.guardar_data("data/clientes_data.yml", clientes_dict)
+        
+        GestorObjetos.registro("alquiler", cliente.id, pelicula_id, "data/alquiler_data.yml")
+
         rich.print("[bold green]Alquiler exitoso")
         # Press Enter to continue
         r_console.input("[red] Presione Enter para continuar...")
