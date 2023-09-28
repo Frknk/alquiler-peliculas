@@ -15,12 +15,30 @@ class GestorObjetos:
 
     recuperar_cliente(cliente_id: str, data_file: str) -> Cliente:
         Recupera un cliente a partir de su id y el archivo de datos.
+
+    registro(tipo: str, cliente_id: str, pelicula_id: str, data_file: str) -> None:
+        Registra un diccionario de tipo registro en un archivo de datos.
     """
 
     @classmethod
     def registro(cls, tipo: str, cliente_id: str, pelicula_id: str, data_file: str):
         """
-        Registra un diccionario en un archivo de datos.
+        Registra un diccionario de tipo registro en un archivo de datos.
+
+        Parametros
+        ----------
+        tipo : str
+            tipo de registro
+        cliente_id : str
+            id del cliente
+        pelicula_id : str
+            id de la pelicula
+        data_file : str
+            ruta del archivo de datos
+        
+        Return
+        ------
+        None
         """
 
         dict = {
